@@ -1,0 +1,61 @@
+{% extends "layouts/base.html" %}
+{% load static%}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% block title%}Principal{% endblock  %}
+{% block content %}
+
+<div class="container mt-4">
+
+    <!-- Parte superior con dos botones -->
+    <div class="row mb-4">
+      <div class="col-6">
+        <a href="{% url 'perfil' %}" class="btn btn-warning mb-3">perfil</a>
+      </div>
+      <div class="col-6 text-right">
+        <a href="{% url 'logout' %}" class="btn btn-warning mb-3">Salir</a>
+      </div>
+    </div>
+
+    <!-- Parte central con tres tarjetas -->
+    <div class="row">
+      <a href="{%url 'comida1' %}">
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <img style="height: 430px;" style="width: 100px;"
+          src="https://img.freepik.com/fotos-premium/caida-granos-cafe-oscuro-espacio-copia_88281-1264.jpg?w=360" class="card-img-top" alt="Imagen de la tarjeta">
+          <div class="card-body">
+            <h5 class="card-title">Desayuno</h5>
+          </div>
+        </div>
+        </a>
+      </div>
+
+      <div class="col-md-4 mb-4">
+        <a href="{% url 'comida2' %}">
+        <div class="card">
+          <img style="height: 430px;" style="width: 100px;"
+          src="https://img.freepik.com/foto-gratis/espaguetis-taza-negra-tomate-lechuga_1150-23167.jpg?w=360&t=st=1699758445~exp=1699759045~hmac=940bd7b1b0afcc81a6071f7ce2abede5123513b85aad1d28b48681307ab1f7f6" class="card-img-top" alt="Imagen de la tarjeta">
+          <div class="card-body">
+            <h5 class="card-title">Almuerzo</h5>
+          </div>
+        </div>
+        </a>
+      </div>
+
+      <div class="col-md-4 mb-4">
+        <a href="{%url 'comida3' %}">
+        <div class="card">
+          <img style="height: 430px;" style="width: 100px;"
+          src="https://img.freepik.com/foto-gratis/comida-mexicana_23-2148159764.jpg?w=360&t=st=1699758369~exp=1699758969~hmac=c3c7f6a2d174d1f15de2ea83695595cb070078c6051daaa46ee7ae8e7d38d74a" class="card-img-top" alt="Imagen de la tarjeta">
+          <div class="card-body">
+            <h5 class="card-title">Cena</h5>
+          </div>
+        </div>
+        </a>
+      </div>
+    </div>
+
+  </div>
+{% endblock %}

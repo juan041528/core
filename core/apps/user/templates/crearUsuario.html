@@ -1,0 +1,49 @@
+{% extends "layouts/base.html" %}
+{% load static%}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% block title%}Principal{% endblock  %}
+{% block content %}
+<section class="vh-100 gradient-custom">
+    <div class="container py-5 h-100">
+      <div class="row justify-content-center align-items-center h-100">
+        <div class="col-12 col-lg-9 col-xl-7">
+          <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+            <div class="card-body p-4 p-md-5">
+              <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Registrate</h3>
+              
+              <form method=POST>
+                {% csrf_token %}
+                <div class="row">
+                  <div class="col-md-6 mb-4">
+  
+                    <div class="form-outline">
+                      <input v-model="texto" type="text" name="email" id="firstName" class="form-control form-control-lg" />
+                      <label class="form-label" for="firstName">Correo</label>
+                    </div>
+  
+                  </div>
+                  <div class="col-md-6 mb-4 pb-2">
+  
+                     <div class="form-outline">
+                       <input v-model="texto2" type="password"  name="password"  id="phoneNumber" class="form-control form-control-lg" />
+                       <label class="form-label" for="phoneNumber">Contraseña</label>
+                     </div>
+                </div>
+                </div>
+                <div class="row">
+                  <button class="col-md-6 mb-4 btn btn btn-success btn-lg" type="submit">Registrar</button>
+                  <a href={% url 'index' %} class="col-md-6 mb-4 pb-1 btn btn-dark btn-lg" type="Volver" >Volver</a>
+                  {% if error_message %}
+                     <p class="error">{{ error_message }}</p>
+                  {% endif %}
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

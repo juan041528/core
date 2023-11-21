@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Seleccionar ingredientes</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+
+    <style>
+      body {
+        background-color: #febd59; /* Define el color de fondo naranja */
+      }
+        #elementos-seleccionados {
+            margin-right: 200px;
+            margin-top: 200px;
+        }
+
+        #obtenerReceta {
+        padding: 5px 15px; 
+        font-size: 20px;
+        margin-top: 5px; 
+        margin-left: 10px; 
+        color: white;
+    }
+      #recetasAPI{
+        margin-top: 50px; 
+      }
+    </style>
+</head>
+<body>
+  <a href="{% url 'perfil' %}">
+    <button class="btn btn-warning">{{ request.user.email }}</button>
+  </a>
+  
+    <center>
+      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+          <a href="{% url 'logged' %}" class="btn btn-secondary btn-block fa-lg gradient-custom-2 mb-3">Volver</a>
+          <label>_</label>
+          <a href="{% url 'logout' %}" class="btn btn-danger btn-block fa-lg gradient-custom-2 mb-3">Cerar sesión</a>  
+      </div>
+        <h1>Desayuno</h1>
+        <h3>Elige los ingredientes para obtener tu receta</h3>
+        <hr/>
+        <div class="container">
+          
+          <div class="row">
+              
+              <div class="col">
+                <button class="btn btn-secondary btn-large" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Proteínas
+                  </button>
+                  <ul class="dropdown-menu">
+                    <input type="checkbox" name="ingredient" value="Huevos"> Huevos<br>
+                    <input type="checkbox" name="ingredient" value="Tocino"> Tocino<br>
+                    <input type="checkbox" name="ingredient" value="Jamón"> Jamón<br>
+                    <input type="checkbox" name="ingredient" value="Yogur"> Yogur<br>
+                    <input type="checkbox" name="ingredient" value="Tofu"> Tofu<br>
+                  </ul>
+              </div>
+              
+              <div class="col">
+                <button class="btn btn-secondary btn-large" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Frutas
+                  </button>
+                  <ul class="dropdown-menu">
+                    <input type="checkbox" name="ingredient" value="Manzana"> Manzana<br>
+                    <input type="checkbox" name="ingredient" value="Plátano"> Plátano<br>
+                    <input type="checkbox" name="ingredient" value="Fresas"> Fresas<br>
+                    <input type="checkbox" name="ingredient" value="Uvas"> Uvas<br>
+                    <input type="checkbox" name="ingredient" value="Mangos"> Mangos<br>
+                    
+                  </ul>
+              </div>
+              
+              <div class="col">
+                <button class="btn btn-secondary btn-large" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Carbohidratos
+                </button>
+                <ul class="dropdown-menu">
+                  <input type="checkbox" name="ingredient" value="Avena"> Avena<br>
+                  <input type="checkbox" name="ingredient" value="Pan"> Pan<br>
+                  <input type="checkbox" name="ingredient" value="Cereal"> Cereal<br>
+                  <input type="checkbox" name="ingredient" value="Cereal de avena"> Cereal de avena<br>
+                  <input type="checkbox" name="ingredient" value="Granola"> Granola<br>
+                  <input type="checkbox" name="ingredient" value="Tostadas"> Tostadas<br>
+                  <input type="checkbox" name="ingredient" value="Muffins"> Muffins<br>
+                  <input type="checkbox" name="ingredient" value="Croissants"> Croissants<br>
+
+                </ul>
+            </div>
+            
+            <div class="col">
+              <button class="btn btn-secondary btn-large" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Condimentos
+              </button>
+              <ul class="dropdown-menu">
+                <input type="checkbox" name="ingredient" value="Miel"> Miel<br>
+                <input type="checkbox" name="ingredient" value="Mantequilla de maní"> Mantequilla de maní<br>
+                <input type="checkbox" name="ingredient" value="Mantequilla de almendras"> Mantequilla de almendras<br>
+                <input type="checkbox" name="ingredient" value="Mermelada"> Mermelada<br>
+                <input type="checkbox" name="ingredient" value="Nutella"> Nutella<br>
+                <input type="checkbox" name="ingredient" value="Queso crema"> Queso crema<br>
+                <input type="checkbox" name="ingredient" value="Mantequilla"> Mantequilla<br>
+                <input type="checkbox" name="ingredient" value="Miel de maple"> Miel de maple<br>
+
+              </ul>
+          </div>
+          
+    </center>
+
+    <div class="container" id="elementos-seleccionados">
+      Elementos seleccionados:
+  </div>
+  <button class="btn btn-dark" id="obtenerReceta">Obtener Receta</button>
+  <div id="recetasAPI"></div>
+
+  <script>
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    const elementosSeleccionados = document.getElementById('elementos-seleccionados');
+    const selectedElements = [];
+    const recetasAPIElement = document.getElementById('recetasAPI');
+
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function () {
+            const elementos = Array.from(checkboxes)
+                .filter(checkbox => checkbox.checked)
+                .map(checkbox => checkbox.value);
+
+            // Agregar elementos seleccionados al array selectedElements
+            selectedElements.length = 0;
+            selectedElements.push(...elementos);
+
+            elementosSeleccionados.textContent = 'Elementos seleccionados: ' + selectedElements.join(', ');
+        });
+    });
+
+    // Agregar un evento al botón "Obtener Receta"
+    document.getElementById('obtenerReceta').addEventListener('click', function () {
+      if (selectedElements.length > 0) {
+          // Construir la URL del API con los elementos seleccionados
+          const apiUrl = 'http://kmiska.pythonanywhere.com/recetas?ingredientes=' + selectedElements.join(',');
+  
+          // Realizar una solicitud GET al API
+          fetch(apiUrl)
+              .then(response => response.json())
+              .then(data => {
+                  // Comprobar si la respuesta contiene la sección de recetas
+                  if (data && data.recetas && data.recetas.length > 0) {
+                      const recetas = data.recetas;
+                      let recetasHTML = '';
+                      const numRecetasAMostrar = 3;
+  
+                      for (let i = 0; i < Math.min(numRecetasAMostrar, recetas.length); i++) {
+                          const receta = recetas[i];
+  
+                          // Crear una tarjeta de Bootstrap para cada receta
+                          recetasHTML += `
+                              <div class="card">
+                                  <div class="card-body">
+                                      <h5 class="card-title">${receta.nombre}</h5>
+                                      <p class="card-text">${receta.pasos}</p>
+                                  </div>
+                              </div>
+                          `;
+                      }
+  
+                      // Añadir las tarjetas al elemento con el id 'recetasAPIElement'
+                      recetasAPIElement.innerHTML = recetasHTML;
+                  } else {
+                      recetasAPIElement.textContent = 'No se encontraron recetas en la respuesta del API.';
+                  }
+              })
+              .catch(error => {
+                  recetasAPIElement.textContent = 'Error al obtener la receta: ' + error;
+              });
+      } else {
+          recetasAPIElement.textContent = 'No hay elementos seleccionados para buscar recetas.';
+      }
+  })  
+</script>
+
+</body>
+</html>
